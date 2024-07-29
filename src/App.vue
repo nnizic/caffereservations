@@ -3,30 +3,114 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <router-link to="/login">Login</router-link>
+      <router-link to="/signup">Signup</router-link>
     </nav>
-    <router-view/>
+    <router-view />
   </div>
+  <div class="menu">
+    <div class="toggle"><ion-icon name="add-outline"></ion-icon></div>
+    <li style="--i: 0">
+      <a href="#"><ion-icon name="home-outline"></ion-icon></a>
+    </li>
+    <li style="--i: 1">
+      <a href="#"><ion-icon name="person-outline"></ion-icon></a>
+    </li>
+    <li style="--i: 2">
+      <a href="#"><ion-icon name="key-outline"></ion-icon></a>
+    </li>
+    <li style="--i: 3">
+      <a href="#"><ion-icon name="mail-outline"></ion-icon></a>
+    </li>
+  </div>
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+  ></script>
+  <script>
+    let toggle = document.querySelector(".toggle");
+    let menu = document.querySelector(".menu");
+    toggle.onclick = function () {
+      menu.classList.toggle("active");
+    };
+  </script>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #8460ed, #ff1252);
 }
 
-nav {
-  padding: 30px;
+.menu {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.menu li {
+  position: absolute;
+  left: 0;
+  list-style: none;
+  transform-origin: 100px;
+  transition: 0.5s;
+  transition-delay: calc(0.1s * var(--i));
+  transform: rotate(0deg) translateX(80px);
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.menu.active li {
+  transform: rotate(calc(480deg / 8 * var(--i)));
+}
+
+.menu li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  transform: rotate(calc(480deg / -8 * var(--i)));
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+  color: #111;
+  transition: 0.5s;
+}
+.menu li a:hover {
+  color: #ff1252;
+}
+
+.toggle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0, 3px, 4px, rgba(0, 0, 0, 0.15);
+  font-size: 2em;
+  transition: 1.25s;
+}
+
+.menu.active .toggle {
+  transfom: rotate(315deg);
 }
 </style>
