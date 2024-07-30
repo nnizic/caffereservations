@@ -1,46 +1,65 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <router-link to="/login">Login</router-link>
-      <router-link to="/signup">Signup</router-link>
-    </nav>
     <router-view />
+    <nav>
+      <div class="menu" :class="{ active: isActive }">
+        <div class="toggle" @click="toggleMenu"><MdAddIcon /></div>
+        <li style="--i: 0">
+          <router-link to="/" class="router"><MdBeerIcon /></router-link>
+        </li>
+        <li style="--i: 1">
+          <router-link to="/about" class="router"><MdAppsIcon /> </router-link>
+        </li>
+        <li style="--i: 2">
+          <router-link to="/login" class="router"><MdPersonIcon /></router-link>
+        </li>
+        <li style="--i: 3">
+          <router-link to="/Signup" class="router"
+            ><MdPersonAddIcon
+          /></router-link>
+        </li>
+      </div>
+    </nav>
   </div>
-  <div class="menu">
-    <div class="toggle"><ion-icon name="add-outline"></ion-icon></div>
-    <li style="--i: 0">
-      <a href="#"><ion-icon name="home-outline"></ion-icon></a>
-    </li>
-    <li style="--i: 1">
-      <a href="#"><ion-icon name="person-outline"></ion-icon></a>
-    </li>
-    <li style="--i: 2">
-      <a href="#"><ion-icon name="key-outline"></ion-icon></a>
-    </li>
-    <li style="--i: 3">
-      <a href="#"><ion-icon name="mail-outline"></ion-icon></a>
-    </li>
-  </div>
-  <script
-    type="module"
-    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-  ></script>
-  <script
-    nomodule
-    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-  ></script>
-  <script>
-    let toggle = document.querySelector(".toggle");
-    let menu = document.querySelector(".menu");
-    toggle.onclick = function () {
-      menu.classList.toggle("active");
-    };
-  </script>
 </template>
+<script>
+import MdAddIcon from 'vue-ionicons/dist/md-add.vue';
+import MdPersonIcon from 'vue-ionicons/dist/md-person.vue';
+import MdPersonAddIcon from 'vue-ionicons/dist/md-person-add.vue';
+import MdAppsIcon from 'vue-ionicons/dist/md-apps.vue';
+import MdBeerIcon from 'vue-ionicons/dist/md-beer.vue';
 
+export default {
+  components: {
+    MdAddIcon,
+    MdPersonIcon,
+    MdPersonAddIcon,
+    MdAppsIcon,
+    MdBeerIcon,
+  },
+  data() {
+    return {
+      isActive: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isActive = !this.isActive;
+    },
+  },
+};
+</script>
 <style lang="scss">
+@import "~vue-ionicons/ionicons.scss";
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -53,9 +72,16 @@ body {
   min-height: 100vh;
   background: linear-gradient(45deg, #8460ed, #ff1252);
 }
+nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 
 .menu {
   position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   width: 200px;
   height: 200px;
   display: flex;
@@ -77,7 +103,7 @@ body {
   transform: rotate(calc(480deg / 8 * var(--i)));
 }
 
-.menu li a {
+.menu li .router {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,8 +116,11 @@ body {
   color: #111;
   transition: 0.5s;
 }
-.menu li a:hover {
+.menu li .router:hover {
   color: #ff1252;
+}
+.menu li .router-link-exact-active {
+  background-color: indianred;
 }
 
 .toggle {
@@ -111,6 +140,7 @@ body {
 }
 
 .menu.active .toggle {
-  transfom: rotate(315deg);
+  background-color: indianred;
+  transform: rotate(315deg);
 }
 </style>
