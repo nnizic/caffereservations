@@ -5,18 +5,30 @@
       <div class="menu" :class="{ active: isActive }">
         <div class="toggle" @click="toggleMenu"><MdAddIcon /></div>
         <li style="--i: 0">
-          <router-link to="/" class="router"><MdBeerIcon /></router-link>
+          <div @click="toggleMenu">
+            <router-link to="/" class="router"><MdBeerIcon /></router-link>
+          </div>
         </li>
         <li style="--i: 1">
-          <router-link to="/about" class="router"><MdAppsIcon /> </router-link>
+          <div @click="toggleMenu">
+            <router-link to="/about" class="router"
+              ><MdAppsIcon />
+            </router-link>
+          </div>
         </li>
         <li style="--i: 2">
-          <router-link to="/login" class="router"><MdPersonIcon /></router-link>
+          <div @click="toggleMenu">
+            <router-link to="/login" class="router"
+              ><MdPersonIcon
+            /></router-link>
+          </div>
         </li>
         <li style="--i: 3">
-          <router-link to="/Signup" class="router"
-            ><MdPersonAddIcon
-          /></router-link>
+          <div @click="toggleMenu">
+            <router-link to="/Signup" class="router"
+              ><MdPersonAddIcon
+            /></router-link>
+          </div>
         </li>
       </div>
     </nav>
