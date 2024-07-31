@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <header>
+      <brand-name />
+    </header>
+
     <router-view />
     <nav>
       <div class="menu" :class="{ active: isActive }">
@@ -40,6 +44,7 @@ import MdPersonIcon from 'vue-ionicons/dist/md-person.vue';
 import MdPersonAddIcon from 'vue-ionicons/dist/md-person-add.vue';
 import MdAppsIcon from 'vue-ionicons/dist/md-apps.vue';
 import MdBeerIcon from 'vue-ionicons/dist/md-beer.vue';
+import BrandName from './components/BrandName.vue';
 
 export default {
   components: {
@@ -48,6 +53,7 @@ export default {
     MdPersonAddIcon,
     MdAppsIcon,
     MdBeerIcon,
+    BrandName,
   },
   data() {
     return {
@@ -78,9 +84,6 @@ export default {
   box-sizing: border-box;
 }
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   background: linear-gradient(45deg, #8460ed, #ff1252);
 }
