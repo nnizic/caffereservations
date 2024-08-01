@@ -10,10 +10,20 @@
         <input type="text" />
         <label>Lozinka</label>
       </div>
+      <submit-buttons />
     </div>
   </div>
 </template>
-<script></script>
+<script>
+import SubmitButtons from '../components/SubmitButtons.vue';
+
+export default {
+  name: 'logIn',
+  components: {
+    SubmitButtons,
+  },
+};
+</script>
 <style>
 * {
   padding: 0;
@@ -30,7 +40,7 @@
   justify-content: center;
 }
 .box {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border-radius: 10px;
