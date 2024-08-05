@@ -1,7 +1,9 @@
 <template>
   <div class="buttons">
     <router-link to="/" class="router"><MdBeerIcon /></router-link>
-    <button class="router"><MdCheckMarkCircleIcon /></button>
+    <button class="router" @click="this.$parent.registerMe">
+      <MdCheckMarkCircleIcon />
+    </button>
   </div>
 </template>
 <script>

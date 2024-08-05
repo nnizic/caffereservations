@@ -3,11 +3,11 @@
     <div class="box">
       <h1>LOGIN</h1>
       <div class="input-field">
-        <input type="text" />
+        <input type="email" />
         <label>Email</label>
       </div>
       <div class="input-field">
-        <input type="text" />
+        <input type="password" />
         <label>Lozinka</label>
       </div>
       <submit-buttons />
@@ -72,9 +72,9 @@ export default {
 .input-field label {
   position: absolute;
   top: 50%;
-  left: 20px;
+  right: 20px;
   transform: translateY(-50%);
-  color: #fff;
+  color: #282828;
   font-size: 19px;
   pointer-events: none;
   transition: 0.3s;

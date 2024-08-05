@@ -3,23 +3,23 @@
     <div class="box">
       <h1>SIGNUP</h1>
       <div class="input-field">
-        <input type="text" />
+        <input type="text" v-model="name" />
         <label>Ime</label>
       </div>
       <div class="input-field">
-        <input type="text" />
+        <input type="text" v-model="surname" />
         <label>Prezime</label>
       </div>
       <div class="input-field">
-        <input type="text" />
+        <input type="email" v-model="username" />
         <label>Email</label>
       </div>
       <div class="input-field">
-        <input type="text" />
+        <input type="password" v-model="password" />
         <label>Lozinka</label>
       </div>
       <div class="input-field">
-        <input type="text" />
+        <input type="password" v-model="passwordRepeat" />
         <label>Ponovo Lozinka</label>
       </div>
       <submit-buttons />
@@ -27,12 +27,60 @@
   </div>
 </template>
 <script>
-import SubmitButtons from '../components/SubmitButtons.vue';
+import { firebase, db } from '@/firebase.js';
+import SubmitButtons from '@/components/SubmitButtons.vue';
 
 export default {
   name: 'signUp',
+  data() {
+    return {
+      username: '',
+      password: '',
+      passwordRepeat: '',
+      name: '',
+      surname: '',
+    };
+  },
   components: {
     SubmitButtons,
+  },
+  methods: {
+    registerMe() {
+      if (this.password === this.passwordRepeat) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.username, this.password)
+          .then(() => {
+            db.collection('allUsers')
+              .doc(this.username + Date.now())
+              .set({
+                username: this.username,
+                name: this.name,
+                surname: this.surname,
+                registeredAt: Date.now(),
+                isAdmin: false,
+              })
+              .then(() => {
+                alert('korisnik spremljen');
+                this.name = '';
+                this.surname = '';
+                this.username = '';
+                this.password = '';
+                this.passwordRepeat = '';
+              })
+              .catch((error) => {
+                alert('Greška: ', error);
+              });
+          })
+          .catch((error) => {
+            alert('Došlo je do greške:', error.message);
+          });
+      } else {
+        this.password = '';
+        this.passwordRepeat = '';
+        alert('Lozinke se ne podudaraju!');
+      }
+    },
   },
 };
 </script>
@@ -84,9 +132,9 @@ export default {
 .input-field label {
   position: absolute;
   top: 50%;
-  left: 20px;
+  right: 20px;
   transform: translateY(-50%);
-  color: #fff;
+  color: #282828;
   font-size: 19px;
   pointer-events: none;
   transition: 0.3s;
