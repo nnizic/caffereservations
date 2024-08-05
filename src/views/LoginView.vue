@@ -15,12 +15,17 @@
   </div>
 </template>
 <script>
-import SubmitButtons from '../components/SubmitButtons.vue';
+import SubmitButtons from "../components/SubmitButtons.vue";
 
 export default {
-  name: 'logIn',
+  name: "logIn",
   components: {
     SubmitButtons,
+  },
+  methods: {
+    loginMe() {
+      console.log("Logiram se...");
+    },
   },
 };
 </script>

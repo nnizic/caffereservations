@@ -1,20 +1,33 @@
 <template>
   <div class="buttons">
     <router-link to="/" class="router"><MdBeerIcon /></router-link>
-    <button class="router" @click="this.$parent.registerMe">
+    <button class="router" @click="loginOrRegisterMe">
       <MdCheckMarkCircleIcon />
     </button>
   </div>
 </template>
 <script>
-import MdBeerIcon from 'vue-ionicons/dist/md-beer.vue';
-import MdCheckMarkCircleIcon from 'vue-ionicons/dist/md-checkmark-circle.vue';
+import MdBeerIcon from "vue-ionicons/dist/md-beer.vue";
+import MdCheckMarkCircleIcon from "vue-ionicons/dist/md-checkmark-circle.vue";
+import router from "@/router";
 
 export default {
-  name: 'SubmitButtons',
+  name: "SubmitButtons",
   components: {
     MdBeerIcon,
     MdCheckMarkCircleIcon,
+  },
+  methods: {
+    loginOrRegisterMe() {
+      console.log("Ruta: ", router.currentRoute.name);
+      console.log("Parent: ", this.$parent);
+      if (router.currentRoute.name === "login") {
+        this.$parent.loginMe();
+      }
+      if (router.currentRoute.name === "signup") {
+        this.$parent.registerMe();
+      }
+    },
   },
 };
 </script>

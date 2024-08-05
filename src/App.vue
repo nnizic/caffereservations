@@ -45,7 +45,7 @@ import MdPersonAddIcon from 'vue-ionicons/dist/md-person-add.vue';
 import MdAppsIcon from 'vue-ionicons/dist/md-apps.vue';
 import MdBeerIcon from 'vue-ionicons/dist/md-beer.vue';
 import BrandName from './components/BrandName.vue';
-import router from './router';
+import router from '@/router';
 
 export default {
   components: {
