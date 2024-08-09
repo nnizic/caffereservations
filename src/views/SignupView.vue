@@ -27,18 +27,18 @@
   </div>
 </template>
 <script>
-import { firebase, db } from '@/firebase.js';
-import SubmitButtons from '@/components/SubmitButtons.vue';
+import { firebase, db } from "@/firebase.js";
+import SubmitButtons from "@/components/SubmitButtons.vue";
 
 export default {
-  name: 'signUp',
+  name: "signUp",
   data() {
     return {
-      username: '',
-      password: '',
-      passwordRepeat: '',
-      name: '',
-      surname: '',
+      username: "",
+      password: "",
+      passwordRepeat: "",
+      name: "",
+      surname: "",
     };
   },
   components: {
@@ -51,7 +51,7 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.username, this.password)
           .then(() => {
-            db.collection('allUsers')
+            db.collection("allUsers")
               .doc(this.username + Date.now())
               .set({
                 username: this.username,
@@ -61,24 +61,24 @@ export default {
                 isAdmin: false,
               })
               .then(() => {
-                alert('korisnik spremljen');
-                this.name = '';
-                this.surname = '';
-                this.username = '';
-                this.password = '';
-                this.passwordRepeat = '';
+                alert("korisnik spremljen");
+                this.name = "";
+                this.surname = "";
+                this.username = "";
+                this.password = "";
+                this.passwordRepeat = "";
               })
               .catch((error) => {
-                alert('Greška: ', error);
+                alert("Greška: ", error);
               });
           })
           .catch((error) => {
-            alert('Došlo je do greške:', error.message);
+            alert("Došlo je do greške:", error.message);
           });
       } else {
-        this.password = '';
-        this.passwordRepeat = '';
-        alert('Lozinke se ne podudaraju!');
+        this.password = "";
+        this.passwordRepeat = "";
+        alert("Lozinke se ne podudaraju!");
       }
     },
   },

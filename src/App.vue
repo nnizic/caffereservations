@@ -39,13 +39,13 @@
   </div>
 </template>
 <script>
-import MdAddIcon from 'vue-ionicons/dist/md-add.vue';
-import MdPersonIcon from 'vue-ionicons/dist/md-person.vue';
-import MdPersonAddIcon from 'vue-ionicons/dist/md-person-add.vue';
-import MdAppsIcon from 'vue-ionicons/dist/md-apps.vue';
-import MdBeerIcon from 'vue-ionicons/dist/md-beer.vue';
-import BrandName from './components/BrandName.vue';
-import router from '@/router';
+import MdAddIcon from "vue-ionicons/dist/md-add.vue";
+import MdPersonIcon from "vue-ionicons/dist/md-person.vue";
+import MdPersonAddIcon from "vue-ionicons/dist/md-person-add.vue";
+import MdAppsIcon from "vue-ionicons/dist/md-apps.vue";
+import MdBeerIcon from "vue-ionicons/dist/md-beer.vue";
+import BrandName from "./components/BrandName.vue";
+import router from "@/router";
 
 export default {
   components: {
@@ -68,8 +68,8 @@ export default {
     },
     showMenu() {
       if (
-        router.currentRoute.path !== '/signup'
-        && router.currentRoute.path !== '/login'
+        router.currentRoute.path !== "/signup" &&
+        router.currentRoute.path !== "/login"
       ) {
         return true;
       }

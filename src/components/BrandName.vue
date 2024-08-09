@@ -9,7 +9,7 @@
 </template>
 <script>
 export default {
-  name: 'BrandName',
+  name: "BrandName",
 };
 </script>
 <style>
