@@ -3,11 +3,11 @@
     <div class="box">
       <h1>LOGIN</h1>
       <div class="input-field">
-        <input type="email" />
+        <input type="email" v-model="username" id="usernameInput" />
         <label>Email</label>
       </div>
       <div class="input-field">
-        <input type="password" />
+        <input type="password" v-model="password" id="passwordInput" />
         <label>Lozinka</label>
       </div>
       <submit-buttons />
@@ -16,15 +16,32 @@
 </template>
 <script>
 import SubmitButtons from "../components/SubmitButtons.vue";
+import { firebase } from "@/firebase";
 
 export default {
   name: "logIn",
   components: {
     SubmitButtons,
   },
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
     loginMe() {
       console.log("Logiram se...");
+
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.username, this.password)
+        .then((result) => {
+          console.log("Uspješna prijava", result);
+        })
+        .catch(function (e) {
+          console.error("Greška", e);
+        });
     },
   },
 };

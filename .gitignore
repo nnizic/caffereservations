@@ -2,6 +2,7 @@
 node_modules
 /dist
 /src/firebaseconfig.js
+/src/tags
 
 # local env files
 .env.local

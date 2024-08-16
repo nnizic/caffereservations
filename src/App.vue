@@ -27,11 +27,16 @@
             /></router-link>
           </div>
         </li>
-        <li style="--i: 3">
+        <li v-if="!store.currentUser" style="--i: 3">
           <div @click="toggleMenu">
             <router-link to="/signup" class="router"
               ><MdPersonAddIcon
             /></router-link>
+          </div>
+        </li>
+        <li v-if="store.currentUser" style="--i: 3">
+          <div class="router" @click="logout()">
+            <MdCloseCircleOutlineIcon />
           </div>
         </li>
       </div>
@@ -44,9 +49,23 @@ import MdPersonIcon from "vue-ionicons/dist/md-person.vue";
 import MdPersonAddIcon from "vue-ionicons/dist/md-person-add.vue";
 import MdAppsIcon from "vue-ionicons/dist/md-apps.vue";
 import MdBeerIcon from "vue-ionicons/dist/md-beer.vue";
+import MdCloseCircleOutlineIcon from "vue-ionicons/dist/md-close-circle-outline.vue";
 import BrandName from "./components/BrandName.vue";
 import router from "@/router";
+import store from "@/store";
+import { firebase } from "@/firebase";
 
+firebase.auth().onAuthStateChanged((user) => {
+  // const currentRoute = router.currentRoute;
+
+  if (user) {
+    console.log("*** User", user.email);
+    store.currentUser = user.email;
+  } else {
+    store.currentUser = null;
+    console.log("CU:", store.currentUser);
+  }
+});
 export default {
   components: {
     MdAddIcon,
@@ -54,12 +73,14 @@ export default {
     MdPersonAddIcon,
     MdAppsIcon,
     MdBeerIcon,
+    MdCloseCircleOutlineIcon,
     BrandName,
   },
   data() {
     return {
       isActive: false,
       router,
+      store,
     };
   },
   methods: {
@@ -74,6 +95,15 @@ export default {
         return true;
       }
       return false;
+    },
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.toggleMenu();
+          this.$router.push({ name: "login" });
+        });
     },
   },
 };
@@ -97,6 +127,9 @@ export default {
 body {
   min-height: 100vh;
   background: linear-gradient(45deg, #8460ed, #ff1252);
+}
+ion-icon {
+  font-size: 32px;
 }
 nav {
   position: fixed;
