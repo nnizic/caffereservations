@@ -39,7 +39,7 @@ export default {
       cards: [],
       store,
       newImageDescription: "",
-      nawImageUrl: "",
+      newImageUrl: "",
       ImageReference: null,
     };
   },
@@ -66,7 +66,7 @@ export default {
         });
     },
     getImage() {
-      return new Promise((resolveFn, errorFn) => {
+      return new Promise((resolveFn) => {
         this.imageReference.generateBlob((data) => {
           resolveFn(data);
         });
@@ -89,7 +89,7 @@ export default {
           email: store.currentUser,
           posted_at: Date.now(),
         });
-
+        alert("Spremljeno: ", doc);
         this.getPosts();
       } catch (e) {
         console.error("Greška: ", e);

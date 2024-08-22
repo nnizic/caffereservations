@@ -15,7 +15,7 @@
         </li>
         <li style="--i: 1">
           <div @click="toggleMenu">
-            <router-link to="/about" class="router"
+            <router-link to="/gallery" class="router"
               ><MdAppsIcon />
             </router-link>
           </div>
