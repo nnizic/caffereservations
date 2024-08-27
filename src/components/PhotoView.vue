@@ -22,8 +22,4 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.card {
-  margin-bottom: 20px;
-}
-</style>
+<style lang="scss"></style>

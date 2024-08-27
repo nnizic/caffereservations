@@ -22,13 +22,12 @@ export default {
   methods: {
     getPosts() {
       db.collection("posts")
-        .orderby("posted_at", "desc")
+        .orderBy("posted_at", "desc")
         .get()
         .then((query) => {
           this.cards = [];
           query.forEach((doc) => {
             const data = doc.data();
-
             this.cards.push({
               id: doc.id,
               time: data.posted_at,
@@ -40,10 +39,16 @@ export default {
     },
   },
   computed: {
-    filterCards() {
+    filteredCards() {
       let termin = this.store.searchTerm;
 
-      return this.cards.filter((card) => card.desccription.includes(termin));
+      let newCards = [];
+      for (let card of this.cards) {
+        if (card.description.includes(termin)) {
+          newCards.push(card);
+        }
+      }
+      return newCards;
     },
   },
   components: {

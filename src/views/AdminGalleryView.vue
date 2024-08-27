@@ -1,31 +1,37 @@
 <template>
   <div id="admingallery">
-    <img
-      v-if="loading"
-      class="loading"
-      :src="require('@/assets/loading.gif')"
-    />
-    <form v-if="!loading" @submit.prevent="postNewImage" class="mb-5">
-      <croppa
-        :width="400"
-        :height="400"
-        placeholder="Učitaj sliku..."
-        v-model="imageReference"
-      ></croppa>
-      <div class="form-group"></div>
-      <div class="form-group">
-        <label for="imageDescription">Opis</label>
-        <input
-          v-model="newImageDescription"
-          type="text"
-          class="form-control ml-2"
-          placeholder="unesi opis slike"
-          id="imageDescription"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary ml-2">Objavi sliku</button>
-    </form>
-    <photo-card v-for="card in filteredCards" :key="card.id" :info="card" />
+    <div>
+      <img
+        v-if="loading"
+        class="loading"
+        :src="require('@/assets/loading.gif')"
+      />
+      <form v-if="!loading" @submit.prevent="postNewImage" class="mb-5">
+        <div class="form-group">
+          <croppa
+            :width="400"
+            :height="400"
+            placeholder="Učitaj sliku..."
+            v-model="imageReference"
+          ></croppa>
+        </div>
+        <div class="form-group">
+          <label for="imageDescription">Opis</label>
+          <input
+            v-model="newImageDescription"
+            type="text"
+            class="form-control ml-2"
+            placeholder="unesi opis slike"
+            id="imageDescription"
+          />
+        </div>
+        <button type="submit" class="btn btn-outline-light">
+          Objavi sliku
+        </button>
+      </form>
+      <hr />
+      <photo-card v-for="card in filteredCards" :key="card.id" :info="card" />
+    </div>
   </div>
 </template>
 <script>
@@ -36,11 +42,12 @@ export default {
   name: "adminGallery",
   data: function () {
     return {
+      loading: false,
       cards: [],
       store,
       newImageDescription: "",
       newImageUrl: "",
-      ImageReference: null,
+      imageReference: null,
     };
   },
   mounted() {
@@ -49,7 +56,7 @@ export default {
   methods: {
     getPosts() {
       db.collection("posts")
-        .orderby("posted_at", "desc")
+        .orderBy("posted_at", "desc")
         .get()
         .then((query) => {
           this.cards = [];
@@ -98,10 +105,16 @@ export default {
     },
   },
   computed: {
-    filterCards() {
+    filteredCards() {
       let termin = this.store.searchTerm;
 
-      return this.cards.filter((card) => card.desccription.includes(termin));
+      let newCards = [];
+      for (let card of this.cards) {
+        if (card.description.includes(termin)) {
+          newCards.push(card);
+        }
+      }
+      return newCards;
     },
   },
   components: {
