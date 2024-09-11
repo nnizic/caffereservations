@@ -53,7 +53,7 @@ import MdCloseCircleOutlineIcon from "vue-ionicons/dist/md-close-circle-outline.
 import BrandName from "./components/BrandName.vue";
 import router from "@/router";
 import store from "@/store";
-import { firebase } from "@/firebase";
+import { firebase, db } from "@/firebase";
 
 firebase.auth().onAuthStateChanged((user) => {
   // const currentRoute = router.currentRoute;
@@ -61,8 +61,10 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     console.log("*** User", user.email);
     store.currentUser = user.email;
+    //this.getAdmin();
   } else {
     store.currentUser = null;
+    store.isAdmin = false;
     console.log("CU:", store.currentUser);
   }
 });
@@ -83,7 +85,24 @@ export default {
       store,
     };
   },
+  mounted() {
+    this.getAdmin();
+  },
   methods: {
+    getAdmin() {
+      db.collection("allUsers")
+        .orderBy("registeredAt")
+        .get()
+        .then((query) => {
+          query.forEach((doc) => {
+            const data = doc.data();
+            if (doc.id.includes(this.store.currentUser)) {
+              this.store.isAdmin = data.isAdmin;
+              console.log("****IS Admin:", this.store.isAdmin);
+            }
+          });
+        });
+    },
     toggleMenu() {
       this.isActive = !this.isActive;
     },
