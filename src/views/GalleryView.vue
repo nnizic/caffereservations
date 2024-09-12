@@ -5,6 +5,7 @@
 </template>
 <script>
 import store from "@/store";
+import router from "@/router";
 import PhotoCard from "@/components/PhotoView.vue";
 import { db } from "@/firebase";
 export default {
@@ -13,13 +14,21 @@ export default {
     return {
       cards: [],
       store,
+      router,
       ImageReference: null,
     };
   },
   mounted() {
+    this.amIAdmin();
     this.getPosts();
   },
   methods: {
+    amIAdmin() {
+      if (store.isAdmin) {
+        console.log("amIADmin:", store.isAdmin);
+        router.push("admingallery");
+      }
+    },
     getPosts() {
       db.collection("posts")
         .orderBy("posted_at", "desc")

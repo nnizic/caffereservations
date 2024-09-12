@@ -17,6 +17,7 @@
 <script>
 import SubmitButtons from "../components/SubmitButtons.vue";
 import { firebase } from "@/firebase";
+import router from "@/router";
 
 export default {
   name: "logIn",
@@ -25,6 +26,8 @@ export default {
   },
   data() {
     return {
+      router,
+
       username: "",
       password: "",
     };
@@ -38,6 +41,7 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then((result) => {
           console.log("Uspješna prijava", result);
+          router.push("gallery");
         })
         .catch(function (e) {
           console.error("Greška", e);

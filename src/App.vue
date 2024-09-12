@@ -61,7 +61,19 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     console.log("*** User", user.email);
     store.currentUser = user.email;
-    //this.getAdmin();
+
+    db.collection("allUsers")
+      .orderBy("registeredAt")
+      .get()
+      .then((query) => {
+        query.forEach((doc) => {
+          const data = doc.data();
+          if (doc.id.includes(store.currentUser)) {
+            store.isAdmin = data.isAdmin;
+            console.log("****IS Admin:", store.isAdmin);
+          }
+        });
+      });
   } else {
     store.currentUser = null;
     store.isAdmin = false;
@@ -85,24 +97,8 @@ export default {
       store,
     };
   },
-  mounted() {
-    this.getAdmin();
-  },
+  mounted() {},
   methods: {
-    getAdmin() {
-      db.collection("allUsers")
-        .orderBy("registeredAt")
-        .get()
-        .then((query) => {
-          query.forEach((doc) => {
-            const data = doc.data();
-            if (doc.id.includes(this.store.currentUser)) {
-              this.store.isAdmin = data.isAdmin;
-              console.log("****IS Admin:", this.store.isAdmin);
-            }
-          });
-        });
-    },
     toggleMenu() {
       this.isActive = !this.isActive;
     },
