@@ -71,6 +71,11 @@ firebase.auth().onAuthStateChanged((user) => {
           if (doc.id.includes(store.currentUser)) {
             store.isAdmin = data.isAdmin;
             console.log("****IS Admin:", store.isAdmin);
+            if (store.isAdmin) {
+              router.push("admingallery");
+            } else {
+              router.push("gallery");
+            }
           }
         });
       });
@@ -105,8 +110,8 @@ export default {
     showMenu() {
       if (
         router.currentRoute.path !== "/signup" &&
-        router.currentRoute.path !== "/login" &&
-        router.currentRoute.path != "/admingallery"
+        router.currentRoute.path !== "/login" //&&
+        //router.currentRoute.path != "/admingallery"
       ) {
         return true;
       }

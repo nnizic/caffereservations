@@ -30,6 +30,19 @@
         </button>
       </form>
       <hr />
+      <form id="searchbar" class="form-inline my-2">
+        <input
+          id="searchterm"
+          v-model="store.searchTerm"
+          class="form-control ml-auto mr-sm-2"
+          type="search"
+          placeholder="Pretraga"
+          aria-label="Search"
+        />
+
+        <img src="@/assets/search.png" width="30" id="searchpic" />
+      </form>
+
       <photo-card v-for="card in filteredCards" :key="card.id" :info="card" />
     </div>
   </div>
@@ -125,5 +138,11 @@ export default {
 <style lang="scss" scoped>
 .loading {
   width: 400px;
+}
+#searchbar a.active {
+  border: black;
+}
+#searchterm {
+  width: 20em;
 }
 </style>
