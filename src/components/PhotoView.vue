@@ -6,6 +6,8 @@
     </div>
     <div class="card-footer text-muted">
       {{ postedFromNow }}
+      <hr />
+      {{ weatherR }}
     </div>
   </div>
 </template>
@@ -14,6 +16,11 @@ import moment from "moment";
 
 export default {
   props: ["info"],
+  data: function () {
+    return {
+      weatherR: "Hello",
+    };
+  },
   name: "PhotoCard",
   computed: {
     postedFromNow() {
@@ -44,13 +51,15 @@ export default {
         console.error(err);
       }
     },
+    getWeatherData() {
+      this.fetchWeatherData().then((weatherData) => {
+        this.weatherR = weatherData[0].icon;
+        console.log(this.weatherR);
+      });
+    },
   },
   mounted() {
-    this.fetchWeatherData().then((weatherData) => {
-      weatherData.forEach((day) => {
-        console.log(day.description);
-      });
-    });
+    this.getWeatherData();
   },
 };
 </script>
