@@ -15,18 +15,32 @@
             v-model="imageReference"
           ></croppa>
         </div>
-        <div class="form-group">
-          <label for="imageDescription">Opis</label>
+        <div>
+          <label for="eventName">Naziv</label>
           <input
-            v-model="newImageDescription"
+            v-model="newEventName"
             type="text"
-            class="form-control ml-2"
-            placeholder="unesi opis slike"
-            id="imageDescription"
+            class="form-control"
+            placeholder="unesi naziv"
+            id="eventName"
+          />
+        </div>
+
+        <div>
+          <calendar-picker />
+        </div>
+        <div class="form-group">
+          <label for="eventDescription">Opis</label>
+          <input
+            v-model="newEventDescription"
+            type="text"
+            class="form-control"
+            placeholder="unesi opis događaja"
+            id="eventDescription"
           />
         </div>
         <button type="submit" class="btn btn-outline-light">
-          Objavi sliku
+          Objavi događaj
         </button>
       </form>
       <hr />
@@ -50,6 +64,7 @@
 <script>
 import store from "@/store";
 import PhotoCard from "@/components/PhotoView.vue";
+import calendarPicker from "@/components/CalendarPickerView.vue";
 import { db, storage } from "@/firebase";
 export default {
   name: "adminGallery",
@@ -58,7 +73,8 @@ export default {
       loading: false,
       cards: [],
       store,
-      newImageDescription: "",
+      newEventName: "",
+      newEventDescription: "",
       newImageUrl: "",
       imageReference: null,
     };
@@ -79,6 +95,7 @@ export default {
             this.cards.push({
               id: doc.id,
               time: data.posted_at,
+              name: data.name,
               description: data.desc,
               url: data.url,
             });
@@ -101,11 +118,13 @@ export default {
         let result = await storage.ref(imageName).put(blobData);
         let url = await result.ref.getDownloadURL();
 
-        const imageDescription = this.newImageDescription;
+        const eventDescription = this.newEventDescription;
+        const eventName = this.newEventName;
 
         let doc = await db.collection("posts").add({
           url: url,
-          desc: imageDescription,
+          name: eventName,
+          desc: eventDescription,
           email: store.currentUser,
           posted_at: Date.now(),
         });
@@ -132,6 +151,7 @@ export default {
   },
   components: {
     PhotoCard,
+    calendarPicker,
   },
 };
 </script>

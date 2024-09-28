@@ -1,5 +1,6 @@
 <template>
   <div class="card text-center">
+    <div class="card-header">{{ info.name }}</div>
     <div class="card-header">{{ info.description }}</div>
     <div class="card-body p-0">
       <img class="card-img-top" :src="info.url" />
@@ -49,6 +50,7 @@ export default {
         }));
       } catch (err) {
         console.error(err);
+        this.weatherR = "Nema dostupnih podataka";
       }
     },
     getWeatherData() {
