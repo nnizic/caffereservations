@@ -1,7 +1,12 @@
 <template>
   <div class="card text-center">
-    <div class="card-header">{{ info.name }}</div>
-    <div class="card-header">{{ info.description }}</div>
+    <div class="card-header">
+      <h4>{{ info.name }}</h4>
+      - {{ info.edate }}
+    </div>
+    <div class="card-header">
+      {{ info.description }} <br />Početak u {{ info.etime }}
+    </div>
     <div class="card-body p-0">
       <img class="card-img-top" :src="info.url" />
     </div>
@@ -9,6 +14,7 @@
       {{ postedFromNow }}
       <hr />
       {{ weatherR }}
+      <i :class="fetchWeatherIcon" style="font-size: 36px"></i>
     </div>
   </div>
 </template>
@@ -19,7 +25,11 @@ export default {
   props: ["info"],
   data: function () {
     return {
-      weatherR: "Hello",
+      weatherR: "Zasada bez dostupnih podataka",
+      iconR: "nema ikone",
+
+      eventDay: this.info.edate,
+      eventTime: this.info.etime,
     };
   },
   name: "PhotoCard",
@@ -27,36 +37,56 @@ export default {
     postedFromNow() {
       return moment(this.info.time).locale("hr").fromNow();
     },
+    fetchWeatherIcon() {
+      switch (this.iconR) {
+        case "clear-night":
+          return "fas fa-moon";
+        case "partly-cloudy-day":
+          return "fas fa-cloud-sun";
+        case "cloudy":
+          return "fas fa-cloud";
+        case "rain":
+          return "fas fa-cloud-rain";
+        case "clear-day":
+          return "fas fa-sun";
+        case "wind":
+          return "fas fa-wind";
+        default:
+          return "no icon found";
+      }
+    },
   },
   methods: {
     async fetchWeatherData() {
       try {
+        console.log("EVENTDATE: " + this.eventDay);
         const response = await fetch(
-          "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Zadar?unitGroup=metric&key=ZQVJ86FZTZXZVSWNPT6CHURBH&contentType=json",
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Zadar/${this.eventDay}T${this.eventTime}?unitGroup=metric&key=ZQVJ86FZTZXZVSWNPT6CHURBH&contentType=json&include=current`,
           {
             method: "GET",
             headers: { accept: "application/json" },
           },
         );
+        // ovo hvata ostale errore
+        if (response.status !== 200) {
+          console.error("Greška: " + response.status);
+          this.weatherR = "Nema dostupnih podataka";
+        } else {
+          const data = await response.json();
 
-        const data = await response.json();
-
-        // Map over the days and return the relevant information
-        return data.days.map((day) => ({
-          icon: day.icon,
-          datetime: day.datetime,
-          temperature: day.temp,
-          description: day.description,
-        }));
+          return data.currentConditions;
+        }
       } catch (err) {
+        // ovo hvata error 500
         console.error(err);
         this.weatherR = "Nema dostupnih podataka";
       }
     },
+
     getWeatherData() {
       this.fetchWeatherData().then((weatherData) => {
-        this.weatherR = weatherData[0].icon;
-        console.log(this.weatherR);
+        this.weatherR = `Vremenska prognoza: Temperatura:${weatherData.temp} °C,  `;
+        this.iconR = weatherData.icon;
       });
     },
   },

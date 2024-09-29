@@ -27,7 +27,8 @@
         </div>
 
         <div>
-          <calendar-picker />
+          Datum događaja:
+          <calendar-picker @data="get" />
         </div>
         <div class="form-group">
           <label for="eventDescription">Opis</label>
@@ -72,8 +73,11 @@ export default {
     return {
       loading: false,
       cards: [],
+      data: "",
       store,
       newEventName: "",
+      newEventDate: this.theDate(),
+      newEventTime: "20:00:00",
       newEventDescription: "",
       newImageUrl: "",
       imageReference: null,
@@ -81,8 +85,22 @@ export default {
   },
   mounted() {
     this.getPosts();
+    console.log(this.newEventDate);
   },
   methods: {
+    theDate() {
+      const todayDate = new Date();
+      const date1 = todayDate.getFullYear();
+      const date2 = todayDate.getMonth() + 1;
+      const date3 = todayDate.getDate();
+      return date1 + "-" + date2 + "-" + date3;
+    },
+
+    get(value) {
+      this.data = value;
+      this.newEventDate = value;
+      console.log(this.data, "-", value);
+    },
     getPosts() {
       db.collection("posts")
         .orderBy("posted_at", "desc")
@@ -96,6 +114,8 @@ export default {
               id: doc.id,
               time: data.posted_at,
               name: data.name,
+              edate: data.edate,
+              etime: data.etime,
               description: data.desc,
               url: data.url,
             });
@@ -120,10 +140,14 @@ export default {
 
         const eventDescription = this.newEventDescription;
         const eventName = this.newEventName;
+        const eventDate = this.newEventDate;
+        const eventTime = this.newEventTime;
 
         let doc = await db.collection("posts").add({
           url: url,
           name: eventName,
+          edate: eventDate,
+          etime: eventTime,
           desc: eventDescription,
           email: store.currentUser,
           posted_at: Date.now(),
@@ -134,6 +158,9 @@ export default {
         console.error("Greška: ", e);
       }
       this.loading = false;
+      this.newEventName = "";
+      this.newEventDescription = "";
+      this.newEventDate = this.theDate();
     },
   },
   computed: {

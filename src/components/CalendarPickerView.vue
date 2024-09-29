@@ -10,9 +10,11 @@
         <div class="flex">
           <div class="flex">
             <!-- Button to toggle the date picker -->
-            <button @click="togglePopover">
-              <img src="../assets/calendar_icon.png" width="20" />
-            </button>
+            <img
+              src="../assets/calendar_icon.png"
+              width="30"
+              @click="togglePopover"
+            />
 
             <!-- Read-only input to display the selected date -->
             <input class="inputbox" :value="inputValue" readonly />
@@ -20,24 +22,24 @@
         </div>
       </template>
     </v-date-picker>
-    <br />
-    {{ "Datum događaja: " + dday }}
   </div>
 </template>
 
 <script>
 export default {
   name: "calendarPicker",
-  dday: "",
   data() {
     return {
       date: new Date(),
+
+      dday: "",
     };
   },
 
   methods: {
     onDayClick(day) {
       this.dday = day.id;
+      this.$emit("data", this.dday);
     },
   },
 };
