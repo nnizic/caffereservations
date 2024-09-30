@@ -52,6 +52,10 @@ export default {
             this.cards.push({
               id: doc.id,
               time: data.posted_at,
+              name: data.name,
+              etime: data.etime,
+              edate: data.edate,
+
               description: data.desc,
               url: data.url,
             });
