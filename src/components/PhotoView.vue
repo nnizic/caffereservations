@@ -2,10 +2,17 @@
   <div class="card text-center">
     <div class="card-header">
       <h4>{{ info.name }}</h4>
-      - {{ info.edate }}
+      {{ info.edate }}
     </div>
     <div class="card-header">
       {{ info.description }} <br />Početak u {{ info.etime }}
+      <button
+        type="button"
+        class="btn btn-secondary"
+        @click="$router.push('reservations')"
+      >
+        Rezerviraj mjesto
+      </button>
     </div>
     <div class="card-body p-0">
       <img class="card-img-top" :src="info.url" />
