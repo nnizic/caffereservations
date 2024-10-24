@@ -7,6 +7,7 @@
     <div class="card-header">
       {{ info.description }} <br />Početak u {{ info.etime }}
       <button
+        v-if="store.currentUser"
         type="button"
         class="btn btn-secondary"
         @click="$router.push('reservations')"
@@ -27,6 +28,7 @@
 </template>
 <script>
 import moment from "moment";
+import store from "@/store";
 
 export default {
   props: ["info"],
@@ -34,7 +36,7 @@ export default {
     return {
       weatherR: "Zasada bez dostupnih podataka",
       iconR: "nema ikone",
-
+      store,
       eventDay: this.info.edate,
       eventTime: this.info.etime,
     };
