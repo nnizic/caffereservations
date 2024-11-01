@@ -15,7 +15,7 @@
           </label>
         </td>
 
-        <td>Prazna ćelija</td>
+        <td> o </td>
         <td>
           <label>
             <input

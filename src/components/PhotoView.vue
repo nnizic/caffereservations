@@ -52,6 +52,8 @@ export default {
           return "fas fa-moon";
         case "partly-cloudy-day":
           return "fas fa-cloud-sun";
+        case "partly-cloudy-night":
+          return "fas fa-cloud-moon";
         case "cloudy":
           return "fas fa-cloud";
         case "rain":
