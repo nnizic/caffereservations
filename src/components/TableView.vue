@@ -242,6 +242,15 @@ label .tableview2 {
   background-repeat: no-repeat;
   cursor: pointer;
 }
+label .tableview3 {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: red;
+  background-image: url("@/assets/table.png");
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
 #pics {
   display: flex;
 }

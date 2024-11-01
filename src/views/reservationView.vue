@@ -10,7 +10,7 @@
 import tableView from "@/components/TableView.vue";
 
 export default {
-  name: "HomeView",
+  name: "ReservationView",
   data: function () {
     return {
       showName: "",
