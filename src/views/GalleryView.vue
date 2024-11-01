@@ -69,7 +69,7 @@ export default {
 
       let newCards = [];
       for (let card of this.cards) {
-        if (card.description.includes(termin)) {
+        if (card.name.includes(termin)) {
           newCards.push(card);
           console.log(newCards);
         }

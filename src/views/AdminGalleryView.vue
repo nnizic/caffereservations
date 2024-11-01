@@ -30,6 +30,17 @@
           Datum događaja:
           <calendar-picker @data="get" />
         </div>
+        <div>
+          <label for="eventTime">Vrijeme događaja</label>
+          <input
+            v-model="newEventTime"
+            type="text"
+            class="form-control"
+            placeholder="20:00"
+            id="eventTime"
+          />
+        </div>
+
         <div class="form-group">
           <label for="eventDescription">Opis</label>
           <input
@@ -81,6 +92,7 @@ export default {
       newEventDescription: "",
       newImageUrl: "",
       imageReference: null,
+      newCircleStyle: Array(9).fill("tableview"), // Initialize 9 circles with the 'tableview' class
     };
   },
   mounted() {
@@ -142,6 +154,7 @@ export default {
         const eventName = this.newEventName;
         const eventDate = this.newEventDate;
         const eventTime = this.newEventTime;
+        const eventTableStyle = this.newCircleStyle;
 
         let doc = await db.collection("posts").add({
           url: url,
@@ -149,6 +162,7 @@ export default {
           edate: eventDate,
           etime: eventTime,
           desc: eventDescription,
+          eTableStyle: eventTableStyle,
           email: store.currentUser,
           posted_at: Date.now(),
         });
@@ -169,7 +183,7 @@ export default {
 
       let newCards = [];
       for (let card of this.cards) {
-        if (card.description.includes(termin)) {
+        if (card.name.includes(termin)) {
           newCards.push(card);
         }
       }
