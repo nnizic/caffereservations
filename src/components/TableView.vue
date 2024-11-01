@@ -15,7 +15,7 @@
           </label>
         </td>
 
-        <td> o </td>
+        <td>&nbsp; &nbsp;</td>
         <td>
           <label>
             <input
@@ -56,7 +56,7 @@
           </label>
         </td>
 
-        <td>Prazna ćelija</td>
+        <td>&nbsp; &nbsp;</td>
         <td>
           <label>
             <input
@@ -97,7 +97,7 @@
           </label>
         </td>
 
-        <td>Prazna ćelija</td>
+        <td>&nbsp; &nbsp;</td>
         <td>
           <label>
             <input
