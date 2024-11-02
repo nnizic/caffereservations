@@ -10,7 +10,7 @@
         v-if="store.currentUser"
         type="button"
         class="btn btn-secondary"
-        @click="$router.push('reservations')"
+        @click="gotoReservation"
       >
         Rezerviraj mjesto
       </button>
@@ -39,6 +39,7 @@ export default {
       store,
       eventDay: this.info.edate,
       eventTime: this.info.etime,
+      tableStyle: this.info.eTableStyle,
     };
   },
   name: "PhotoCard",
@@ -98,6 +99,12 @@ export default {
       this.fetchWeatherData().then((weatherData) => {
         this.weatherR = `Vremenska prognoza: Temperatura:${weatherData.temp} °C,  `;
         this.iconR = weatherData.icon;
+      });
+    },
+    gotoReservation() {
+      this.$router.push({
+        path: "reservations",
+        query: { tables: this.tableStyle },
       });
     },
   },

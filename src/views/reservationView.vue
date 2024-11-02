@@ -24,7 +24,14 @@ export default {
     get(value) {
       this.showName = value.toString();
       this.reservedNames.push(this.showName);
+      this.tables[this.showName - 1] = "tableview2";
       console.log(this.reservedNames);
+      console.log(this.tables);
+    },
+  },
+  computed: {
+    tables() {
+      return this.$route.query.tables || []; //Default to empty array
     },
   },
 };

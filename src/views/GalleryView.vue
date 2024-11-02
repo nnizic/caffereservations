@@ -55,7 +55,7 @@ export default {
               name: data.name,
               etime: data.etime,
               edate: data.edate,
-
+              eTableStyle: data.eTableStyle,
               description: data.desc,
               url: data.url,
             });
