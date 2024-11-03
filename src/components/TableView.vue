@@ -179,6 +179,34 @@
   </div>
 </template>
 <script>
+import { db } from "@/firebase";
+import store from "@/store";
+
+async function geteTableStyle(postId) {
+  try {
+    // Reference the document in Firestore
+    const postRef = db.collection("posts").doc(postId);
+
+    // Fetch the document data
+    const doc = await postRef.get();
+
+    if (doc.exists) {
+      // Extract the array from the document data
+      const data = doc.data();
+      const arrayField = data.eTableStyle || []; // Default to empty array if not found
+
+      console.log("Retrieved array:", arrayField);
+      return arrayField; // Return the array if you need to use it elsewhere
+    } else {
+      console.log("No such document found!");
+      return [];
+    }
+  } catch (error) {
+    console.error("Error retrieving array from Firestore:", error);
+    return [];
+  }
+}
+
 export default {
   name: "tableView",
   data() {
@@ -207,6 +235,9 @@ export default {
         return require("@/assets/logo.png");
       }
     },
+  },
+  async mounted() {
+    this.circlestyle = await geteTableStyle(store.activeEvent);
   },
 };
 </script>

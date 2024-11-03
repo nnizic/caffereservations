@@ -24,7 +24,7 @@ async function updateTables(postId, newValues) {
 
     // Update the entire array field with the new values
     await postRef.update({
-      arrayField: newValues,
+      eTableStyle: newValues,
     });
 
     console.log("Array updated successfully with new values!");
