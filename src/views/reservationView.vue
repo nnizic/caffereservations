@@ -2,7 +2,9 @@
   <div class="home">
     Rezervacija stolova:
     <tableView @data="get" />
-    <button @click="finishIt">Završi</button>
+    <button type="button" class="btn btn-secondary" @click="finishIt">
+      Završi
+    </button>
   </div>
 </template>
 
@@ -55,6 +57,9 @@ export default {
     finishIt() {
       updateTables(store.activeEvent, this.tables);
       console.log(store.activeEvent);
+      this.$router.push({
+        path: "/",
+      });
     },
   },
   computed: {
