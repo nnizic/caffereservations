@@ -110,6 +110,7 @@ export default {
     showMenu() {
       if (
         router.currentRoute.path !== "/signup" &&
+        router.currentRoute.path !== "/reservations" &&
         router.currentRoute.path !== "/login" //&&
         //router.currentRoute.path != "/admingallery"
       ) {

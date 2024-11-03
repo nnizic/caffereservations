@@ -102,6 +102,8 @@ export default {
       });
     },
     gotoReservation() {
+      console.log(this.info.id);
+      store.activeEvent = this.info.id;
       this.$router.push({
         path: "reservations",
         query: { tables: this.tableStyle },
