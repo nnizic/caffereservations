@@ -129,6 +129,7 @@ export default {
               edate: data.edate,
               etime: data.etime,
               description: data.desc,
+              eTableStyle: data.eTableStyle,
               url: data.url,
             });
           });
