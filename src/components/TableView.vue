@@ -169,6 +169,7 @@
               class="btn btn-primary"
               @click="changeColor"
               data-dismiss="modal"
+              :disabled="circlestyle[tableNum - 1] !== 'tableview'"
             >
               Rezerviraj
             </button>
