@@ -45,13 +45,18 @@ export default {
     SubmitButtons,
   },
   methods: {
-    registerMe() {
-      if (this.password === this.passwordRepeat) {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.username, this.password)
-          .then(() => {
-            db.collection("allUsers")
+    async registerMe() {
+      try {
+        if (this.password.length >= 6) {
+          if (this.password === this.passwordRepeat) {
+            // Attempt to create a user with Firebase Auth
+            await firebase
+              .auth()
+              .createUserWithEmailAndPassword(this.username, this.password);
+
+            // Attempt to save user data to Firestore
+            await db
+              .collection("allUsers")
               .doc(this.username + Date.now())
               .set({
                 username: this.username,
@@ -59,26 +64,27 @@ export default {
                 surname: this.surname,
                 registeredAt: Date.now(),
                 isAdmin: false,
-              })
-              .then(() => {
-                alert("korisnik spremljen");
-                this.name = "";
-                this.surname = "";
-                this.username = "";
-                this.password = "";
-                this.passwordRepeat = "";
-              })
-              .catch((error) => {
-                alert("Greška: ", error);
               });
-          })
-          .catch((error) => {
-            alert("Došlo je do greške:", error.message);
-          });
-      } else {
-        this.password = "";
-        this.passwordRepeat = "";
-        alert("Lozinke se ne podudaraju!");
+
+            alert("Korisnik spremljen");
+            // Reset fields after successful registration
+            this.name = "";
+            this.surname = "";
+            this.username = "";
+            this.password = "";
+            this.passwordRepeat = "";
+          } else {
+            this.password = "";
+            this.passwordRepeat = "";
+            alert("Lozinke se ne podudaraju!");
+          }
+        } else {
+          this.password = "";
+          this.passwordRepeat = "";
+          alert("Lozinka mora imati 6 ili više znakova!");
+        }
+      } catch (error) {
+        alert("Došlo je do greške: " + error.message);
       }
     },
   },
