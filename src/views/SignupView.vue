@@ -28,12 +28,14 @@
 </template>
 <script>
 import { firebase, db } from "@/firebase.js";
+import router from "@/router";
 import SubmitButtons from "@/components/SubmitButtons.vue";
 
 export default {
   name: "signUp",
   data() {
     return {
+      router,
       username: "",
       password: "",
       passwordRepeat: "",
@@ -73,6 +75,7 @@ export default {
             this.username = "";
             this.password = "";
             this.passwordRepeat = "";
+            this.router.push("userdashboard");
           } else {
             this.password = "";
             this.passwordRepeat = "";

@@ -41,6 +41,7 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then((result) => {
           console.log("Uspješna prijava", result);
+          this.router.push("userdashboard");
         })
         .catch(function (e) {
           console.error("Greška", e);
