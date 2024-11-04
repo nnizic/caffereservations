@@ -20,10 +20,17 @@
             </router-link>
           </div>
         </li>
-        <li style="--i: 2">
+        <li v-if="!store.currentUser" style="--i: 2">
           <div @click="toggleMenu">
             <router-link to="/login" class="router"
               ><MdPersonIcon
+            /></router-link>
+          </div>
+        </li>
+        <li v-if="store.currentUser" style="--i: 2">
+          <div @click="toggleMenu">
+            <router-link to="/userdashboard" class="router"
+              ><MdBookIcon
             /></router-link>
           </div>
         </li>
@@ -48,6 +55,7 @@ import MdAddIcon from "vue-ionicons/dist/md-add.vue";
 import MdPersonIcon from "vue-ionicons/dist/md-person.vue";
 import MdPersonAddIcon from "vue-ionicons/dist/md-person-add.vue";
 import MdAppsIcon from "vue-ionicons/dist/md-apps.vue";
+import MdBookIcon from "vue-ionicons/dist/md-book.vue";
 import MdBeerIcon from "vue-ionicons/dist/md-beer.vue";
 import MdCloseCircleOutlineIcon from "vue-ionicons/dist/md-close-circle-outline.vue";
 import BrandName from "./components/BrandName.vue";
@@ -71,11 +79,6 @@ firebase.auth().onAuthStateChanged((user) => {
           if (doc.id.includes(store.currentUser)) {
             store.isAdmin = data.isAdmin;
             console.log("****IS Admin:", store.isAdmin);
-            if (store.isAdmin) {
-              router.push("admingallery");
-            } else {
-              router.push("gallery");
-            }
           }
         });
       });
@@ -92,6 +95,7 @@ export default {
     MdPersonAddIcon,
     MdAppsIcon,
     MdBeerIcon,
+    MdBookIcon,
     MdCloseCircleOutlineIcon,
     BrandName,
   },

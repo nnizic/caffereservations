@@ -54,8 +54,40 @@ export default {
       console.log(this.reservedNames);
       console.log(this.tables);
     },
+
+    async createReservation() {
+      const reservationData = {
+        date: new Date(),
+        rEvent: store.activeEvent,
+        rTables: this.reservedNames,
+        rStatus: "pending",
+      };
+
+      try {
+        // Create a document with the user's email as the ID
+        const userDocRef = db.collection("reservations").doc(store.currentUser);
+
+        // Check if the document already exists
+        const doc = await userDocRef.get();
+        if (!doc.exists) {
+          await userDocRef.set({
+            createdAt: Date.now(),
+          });
+        }
+
+        // Add a new reservation subcollection under the user's document
+        const reservationRef = userDocRef.collection("reservations");
+        await reservationRef.add(reservationData);
+
+        console.log("Reservation created successfully!");
+      } catch (error) {
+        console.error("Error creating reservation:", error);
+      }
+    },
+
     finishIt() {
       updateTables(store.activeEvent, this.tables);
+      this.createReservation();
       console.log(store.activeEvent);
       this.$router.push({
         path: "/",
