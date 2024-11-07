@@ -20,6 +20,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 50px;
+  background-color: none !important;
 }
 .brand {
   display: flex;
