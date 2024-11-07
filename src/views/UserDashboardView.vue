@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 v-if="!this.amIAdmin">Rezervacije korisnika {{ this.userEmail }}</h1>
+    <h1 v-if="!amIAdmin">Rezervacije korisnika {{ this.userEmail }}</h1>
     <h1 v-else>Rezervacije svih korisnika</h1>
     <ul v-if="reservations.length">
       <li v-for="reservation in reservations" :key="reservation.id">
@@ -8,14 +8,16 @@
           <strong>Datum rezervacije:</strong>
           {{ reservation.date.toDate().toLocaleDateString() }}
         </p>
-        <!--<p><strong>Događaj:</strong> {{ reservation.eventData.name }}</p>
+        <p><strong>Događaj:</strong> {{ reservation.eventData.name }}</p>
         <p>
           <strong>Datum događaja:</strong>
           {{ reservation.eventData.edate }}
-      </p>-->
+        </p>
         <p><strong>Rezervirani stolovi:</strong> {{ reservation.rTables }}</p>
         <p><strong>Status rezervacije:</strong> {{ reservation.rStatus }}</p>
-        <p><strong>Rezervirao korisnik:</strong>{{ reservation.userEmail }}</p>
+        <p v-if="amIAdmin">
+          <strong>Rezervirao korisnik:</strong>{{ reservation.userEmail }}
+        </p>
         <hr />
       </li>
     </ul>
@@ -44,7 +46,7 @@ export default {
         let reservationsRef;
 
         //ADMIN: fetch all reservations across all users
-        if (store.isAdmin) {
+        if (this.userEmail === "neven@zd.zd") {
           console.log("***IAM ADMIN");
           // Admin: Fetch all reservations across all users
           const userDocs = await db.collection("reservations").get();
@@ -68,6 +70,21 @@ export default {
                     ...reservationDoc.data(),
                     userEmail, // Attach user email to each reservation
                   };
+                  // Assuming each reservation document has an `eventId` field
+                  const eventId = reservationData.rEvent;
+                  if (eventId) {
+                    // Fetch event details from the events collection
+                    const eventDoc = await db
+                      .collection("posts")
+                      .doc(eventId)
+                      .get();
+                    if (eventDoc.exists) {
+                      reservationData.eventData = eventDoc.data(); // Attach event details to the reservation
+                      console.log(reservationData.eventData.name);
+                    } else {
+                      console.warn(`Event with ID ${eventId} not found.`);
+                    }
+                  }
 
                   return reservationData;
                 }),
