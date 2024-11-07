@@ -1,6 +1,8 @@
 <template>
   <div class="brand">
-    <img alt="ET logo" src="../assets/logo.png" />
+    <router-link to="/">
+      <img alt="ET logo" src="../assets/logo.png"
+    /></router-link>
     <span>
       Ul. Ante Starčevića 11A, 23000 Zadar<br />
       radno vrijeme:07:00 - 00:00</span

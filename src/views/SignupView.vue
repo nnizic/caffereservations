@@ -139,6 +139,7 @@ export default {
   color: #fff;
 }
 .input-field label {
+  height: 0px;
   position: absolute;
   top: 50%;
   right: 20px;
