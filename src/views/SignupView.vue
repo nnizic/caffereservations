@@ -140,9 +140,9 @@ export default {
 }
 .input-field label {
   position: absolute;
-  top: 120%;
+  top: 50%;
   right: 20px;
-  transform: translateY(-20%);
+  transform: translateY(-50%);
   color: #282828;
   font-size: 19px;
   pointer-events: none;
