@@ -94,7 +94,7 @@ export default {
         this.weatherR = "Nema dostupnih podataka";
       }
     },
-
+    // dohvat podataka o vremenskoj prognozi
     getWeatherData() {
       this.fetchWeatherData().then((weatherData) => {
         this.weatherR = `Vremenska prognoza: Temperatura:${weatherData.temp} °C,  `;
