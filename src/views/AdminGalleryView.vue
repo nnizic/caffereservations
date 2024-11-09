@@ -69,7 +69,12 @@
         <img src="@/assets/search.png" width="30" id="searchpic" />
       </form>
 
-      <photo-card v-for="card in filteredCards" :key="card.id" :info="card" />
+      <photo-card
+        id="photocard"
+        v-for="card in filteredCards"
+        :key="card.id"
+        :info="card"
+      />
     </div>
   </div>
 </template>
@@ -206,5 +211,8 @@ export default {
 }
 #searchterm {
   width: 20em;
+}
+#photocard {
+  margin: 2%;
 }
 </style>
