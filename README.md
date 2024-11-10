@@ -1,19 +1,16 @@
 # caffereservations
 
-## Project setup
+<title>caffereservations/README.md at main · nnizic/caffereservations</title>
+
+
+## Link
 ```
-npm install
+https://caffereservations.netlify.app/
 ```
 
-### Compiles and hot-reloads for development
+### Made for
 ```
-npm run serve
+FIPU
+Programsko inženjerstvo 2024.
+Mentor: Nikola Tanković (https://fipu.unipu.hr/fipu/nikola.tankovic, nikola.tankovic@unipu.hr)
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
