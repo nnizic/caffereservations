@@ -1,7 +1,12 @@
 # caffereservations
 
-<title>caffereservations/README.md at main · nnizic/caffereservations</title>
+```
+Aplikacija za rezervaciju stolova u caffe baru
+za razna događanja.
+Korisnik rezervira stol,
+Admin potvrđuje rezervaciju.
 
+```
 
 ## Link
 ```
